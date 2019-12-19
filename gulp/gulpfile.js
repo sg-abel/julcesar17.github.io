@@ -1,8 +1,6 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var cache = require('gulp-cache');
-var uglify = require('gulp-uglify');
-var concat = require('gulp-concat');
+const { src, dest, parallel, watch } = require('gulp');
+const sass = require('gulp-sass');
+const concat = require('gulp-concat');
 const minify = require('gulp-minify');
 
 function swallowError(error){
@@ -10,58 +8,64 @@ function swallowError(error){
 	this.emit('end')
 }
 
-gulp.task('styles', function() {
-	gulp.src('css/index.scss')
-	.pipe(sass({outputStyle: 'compressed'})
-	.on('error', sass.logError))
-	.pipe(concat('index.css'))
-	.pipe(gulp.dest('../assets/css/'));
-});
+function css() {
+    return src('css/index.scss')
+        .pipe(sass({outputStyle: 'compressed'})
+        .on('error', sass.logError))
+        .pipe(concat('index.css'))
+        .pipe(dest('../assets/css/benny-ibarra/'));
+}
 
-gulp.task('uglify', function(){
-	gulp.src([
-		'js/vars.js',
-		'js/actions.js',
-		'js/functions.js',
-		'js/helpers.js',
-		'js/listeners.js',
-		'js/initializers.js',
-	])
-	.on('error', swallowError)
-	.pipe(concat('index.js'))
-	.on('error', swallowError)
-	.pipe(minify({
-		ext:{
-			src:'-debug.js',
-			min:'.js'
-		}
-	}))
-	.on('error', swallowError)
-	.pipe(
-		gulp.dest('../assets/js')
-	);
-});
+function js() {
+    return src([
+            'js/vars.js',
+            'js/actions.js',
+            'js/ajax.js',
+            'js/functions.js',
+            'js/helpers.js',
+            'js/listeners.js',
+            'js/initializers.js'
+        ], {
+            sourcemaps: false
+        })
+        .on('error', swallowError)
+        .pipe(concat('index.js'))
+        .on('error', swallowError)
+        .pipe(minify({
+            ext:{
+                src:'-debug.js',
+                min:'.js'
+            }
+        }))
+        .on('error', swallowError)
+        .pipe(dest('../assets/js', { sourcemaps: false }));
+}
 
-gulp.task('pluginsg', function(){
-	gulp.src([
-		'js/plugins.js',
-	])
-	.on('error', swallowError)
-	.pipe(concat('plugins.js'))
-	.on('error', swallowError)
-	.pipe(
-		uglify(),
-		gulp.dest('../assets/js')
-	);
-});
+function plugins() {
+    return src([
+            'js/plugins.js',
+        ], {
+            sourcemaps: false
+        })
+        .on('error', swallowError)
+        .pipe(concat('plugins.js'))
+        .on('error', swallowError)
+        .pipe(minify({
+            ext:{
+                src:'-debug.js',
+                min:'.js'
+            }
+        }))
+        .on('error', swallowError)
+        .pipe(dest('../assets/js', { sourcemaps: false }));
+}
 
-gulp.task('watch', function() {
-	gulp.watch('css/**/*.scss', ['styles']);
-	gulp.watch('js/*.js', ['uglify']);
-});
+function real() {
+    watch(['css/**/*.scss', 'js/*.js'], parallel(css, js));
+}
 
-gulp.task('clearCache', function() {
-  cache.clearAll();
-});
-
-gulp.task('default',['styles','uglify','pluginsg']);
+exports.js = js;
+exports.css = css;
+exports.plugins = plugins;
+exports.watch = real;
+exports.default = parallel(css, js, plugins);
