@@ -13,7 +13,7 @@ function css() {
         .pipe(sass({outputStyle: 'compressed'})
         .on('error', sass.logError))
         .pipe(concat('index.css'))
-        .pipe(dest('../assets/css/benny-ibarra/'));
+        .pipe(dest('../assets/css/'));
 }
 
 function js() {
