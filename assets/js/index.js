@@ -1,1 +1,1 @@
-function actionButtons(){}
+function actionButtons(){$(".rigth a").off().on("click",function(t){t.preventDefault(),$(".content").addClass("show-chat")}),$(".left a").off().on("click",function(t){t.preventDefault(),$(".content").removeClass("show-chat")})}actionButtons();

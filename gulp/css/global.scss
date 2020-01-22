@@ -1,13 +1,45 @@
 body {
-  background-color: $verde;
-  color: $blanco;
+  background-color: $blanco;
+  color: $negro;
   font-family: "Comfortaa", Helvetica, Arial, sans-serif;
   font-weight: 400;
-  width: 100%;
-  height: 100%;
+  width: 350px;
+  height: 450px;
+  position: relative;
 }
 
 html,body{
   overflow: hidden;
+}
+
+.content{
+  width: 700px;
+  height: 450px;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.content.show-chat{
+  left: -350px;
+}
+
+.rigth,
+.left{
+  border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 100%;
+  a{
+    color: $negro;
+  }
+}
+
+.rigth{
+  border-right: 0;
+  background-color: red;
 }
 
