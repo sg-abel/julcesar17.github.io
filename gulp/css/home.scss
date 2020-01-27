@@ -1,0 +1,103 @@
+/**
+    section header
+*/
+
+header{
+    .navbar {
+        height: 70px;
+        background-color: transparent;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid $blanco;
+        color: $blanco;
+        z-index: 10;
+        margin-bottom: 0;
+        border-radius: 0;
+        transition: background-color 1s ease 0s;
+        &.solid{
+            background-color: $blueClassic;
+            transition: background-color 1s ease 0s;
+            .navbar-header{
+                .navbar-brand{
+                    display: inline-block;
+                    color: $blanco;
+                    transition: color 1s ease 0s;
+                }
+            }
+            #navbar{
+                .navbar-nav{
+                    > li > a {
+                        color: $blanco;
+                        transition: color 1s ease 0s;
+                    }
+                }
+            }
+        }
+        .navbar-header{
+            .navbar-brand {
+                display: none;
+                margin-top: 10px;
+                color: $blanco;
+                font-weight: 400;
+            }
+        }
+        #navbar{
+            &.navbar-collapse.collapse.in{
+                ul{
+                    background-color: $blueClassic;
+                }
+            }
+            .navbar-nav{
+                margin: 0;
+                > li > a {
+                    color: $blanco;
+                    font-weight: 500;
+                    font-size: 1em;
+                    text-transform: lowercase;
+                    margin: 10px 5px 5px 5px;
+                    padding-bottom: 10px;
+                    &:hover,
+                    &:focus,
+                    &:active{
+                        color: $blanco;
+                        border-bottom: 1px solid $blanco;
+                    }
+                    &:visited {
+                        color: $blanco;
+                        text-decoration: none; 
+                    }
+                }
+                > .active > a{
+                    &:hover,
+                    &:focus{
+                        color: $blanco;
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+        .navbar-toggle{
+            border-color: $blanco;
+            &:hover,
+            &:focus{
+                background-color: $blueClassic;
+            }
+            .icon-bar{
+                color: $blanco;
+                background-color: $blanco;
+            }
+        }
+    }
+}
+
+
+/**
+    section top
+*/
+
+.top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
